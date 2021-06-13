@@ -1,14 +1,14 @@
 pragma solidity =0.5.16;
 
-import './interfaces/IPancakePair.sol';
-import './PancakeERC20.sol';
+import './interfaces/IAlibabaPair.sol';
+import './AlibabaERC20.sol';
 import './libraries/Math.sol';
 import './libraries/UQ112x112.sol';
 import './interfaces/IERC20.sol';
-import './interfaces/IPancakeFactory.sol';
-import './interfaces/IPancakeCallee.sol';
+import './interfaces/IAlibabaFactory.sol';
+import './interfaces/IAlibabaCallee.sol';
 
-contract PancakePair is IPancakePair, PancakeERC20 {
+contract AlibabaPair is IAlibabaPair, AlibabaERC20 {
     using SafeMath  for uint;
     using UQ112x112 for uint224;
 
@@ -29,7 +29,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     uint private unlocked = 1;
     modifier lock() {
-        require(unlocked == 1, 'Pancake: LOCKED');
+        require(unlocked == 1, 'Alibaba: LOCKED');
         unlocked = 0;
         _;
         unlocked = 1;
@@ -64,14 +64,14 @@ contract PancakePair is IPancakePair, PancakeERC20 {
 
     // called once by the factory at time of deployment
     function initialize(address _token0, address _token1) external {
-        require(msg.sender == factory, 'Pancake: FORBIDDEN'); // sufficient check
+        require(msg.sender == factory, 'Alibaba: FORBIDDEN'); // sufficient check
         token0 = _token0;
         token1 = _token1;
     }
 
     // update reserves and, on the first call per block, price accumulators
     function _update(uint balance0, uint balance1, uint112 _reserve0, uint112 _reserve1) private {
-        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'Pancake: OVERFLOW');
+        require(balance0 <= uint112(-1) && balance1 <= uint112(-1), 'Alibaba: OVERFLOW');
         uint32 blockTimestamp = uint32(block.timestamp % 2**32);
         uint32 timeElapsed = blockTimestamp - blockTimestampLast; // overflow is desired
         if (timeElapsed > 0 && _reserve0 != 0 && _reserve1 != 0) {
@@ -166,7 +166,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         { // scope for _token{0,1}, avoids stack too deep errors
         address _token0 = token0;
         address _token1 = token1;
-        require(to != _token0 && to != _token1, 'Pancake: INVALID_TO');
+        require(to != _token0 && to != _token1, 'Alibaba: INVALID_TO');
         if (amount0Out > 0) _safeTransfer(_token0, to, amount0Out); // optimistically transfer tokens
         if (amount1Out > 0) _safeTransfer(_token1, to, amount1Out); // optimistically transfer tokens
         if (data.length > 0) IPancakeCallee(to).pancakeCall(msg.sender, amount0Out, amount1Out, data);
@@ -175,7 +175,7 @@ contract PancakePair is IPancakePair, PancakeERC20 {
         }
         uint amount0In = balance0 > _reserve0 - amount0Out ? balance0 - (_reserve0 - amount0Out) : 0;
         uint amount1In = balance1 > _reserve1 - amount1Out ? balance1 - (_reserve1 - amount1Out) : 0;
-        require(amount0In > 0 || amount1In > 0, 'Pancake: INSUFFICIENT_INPUT_AMOUNT');
+        require(amount0In > 0 || amount1In > 0, 'Alibaba: INSUFFICIENT_INPUT_AMOUNT');
         { // scope for reserve{0,1}Adjusted, avoids stack too deep errors
         uint balance0Adjusted = balance0.mul(1000).sub(amount0In.mul(2));
         uint balance1Adjusted = balance1.mul(1000).sub(amount1In.mul(2));
