@@ -1,8 +1,7 @@
-# Pancake Factory
+# Alibaba Factory
 
-[![Actions Status](https://github.com/pancakeswap/pancake-swap-core/workflows/CI/badge.svg)](https://github.com/pancakeswap/pancake-swap-core/actions)
+[![Actions Status](https://github.com/Alibabaswap/Alibabaswap-core/workflows/CI/badge.svg)](https://github.com/Alibabaswap/Alibabaswap-core/actions)
 
-In-depth documentation on PancakeSwap is available at [docs.pancakeswap.finance](https://docs.pancakeswap.finance/).
 
 # Local Development
 
