@@ -1,13 +1,13 @@
 pragma solidity =0.5.16;
 
-import './interfaces/IPancakeERC20.sol';
+import './interfaces/IAlibabaERC20.sol';
 import './libraries/SafeMath.sol';
 
-contract PancakeERC20 is IPancakeERC20 {
+contract AlibabaERC20 is IAlibabaERC20 {
     using SafeMath for uint;
 
-    string public constant name = 'Pancake LPs';
-    string public constant symbol = 'Cake-LP';
+    string public constant name = 'Alibaba LPs';
+    string public constant symbol = 'Alibaba-LP';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;
